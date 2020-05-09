@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 $api = app('Dingo\Api\Routing\Router');
-$api->version('v1', function ($api) {
+$api->version('v1', ['middleware' => 'api.auth'], function ($api) {
     $api->get('/', function () {
         return ['Fruits' => 'Delicious and healthy!'];
     });
