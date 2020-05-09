@@ -3,9 +3,9 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 
-use App\Models\V1\Empleado;
+use App\Models\Empleado;
 use Faker\Generator as Faker;
-use App\Models\V1\TipoDocumento;
+use App\Models\TipoDocumento;
 use Faker\Provider\es_PE\Person;
 
 $factory->define(Empleado::class, function (Faker $faker) {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\V1\TipoDocumento;
+use App\Models\TipoDocumento;
 use Illuminate\Database\Seeder;
 
 class TipoDocumentoTableSeeder extends Seeder
