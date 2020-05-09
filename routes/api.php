@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,18 +10,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 $api = app('Dingo\Api\Routing\Router');
-$api->version('v1', ['middleware' => 'api.auth'], function ($api) {
-    $api->group(['prefix' => 'auth'], function ($api) {
-        $api->post('login', 'Auth\AuthApiController@login');
-        $api->post('register', 'Auth\AuthApiController@register');
-        $api->post('logout', 'Auth\AuthApiController@logout', ['middleware' => ['auth.jwt']]);
-        $api->get('refresh', 'Auth\AuthApiController@refresh', ['middleware' => ['auth.jwt']]);
-        $api->get('user', 'Auth\AuthApiController@me', ['middleware' => ['auth.jwt']]);
+$api->version('v1', function ($api) {
+    $api->group(['namespace' => 'App\Http\Controllers\Auth','prefix' => 'auth'], function ($api) {
+        $api->post('login', 'AuthApiController@login');
+        $api->post('register', 'AuthApiController@register');
+        $api->post('logout', 'AuthApiController@logout', ['middleware' => ['auth.jwt']]);
+        $api->get('refresh', 'AuthApiController@refresh', ['middleware' => ['auth.jwt']]);
+        $api->get('user', 'AuthApiController@me', ['middleware' => ['auth.jwt']]);
     });
 
 
 
-    $api->get('/', function () {
+    $api->get('data', ['middleware' => ['auth.jwt']], function () {
         return ['Fruits' => 'Delicious and healthy!'];
     });
 });

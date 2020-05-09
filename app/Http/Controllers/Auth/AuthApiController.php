@@ -2,36 +2,31 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\ApiController;
+use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthApiController extends ApiController
 {
     /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
-
-    /**
-     * Get a JWT via given credentials.
-     *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
-        $credentials = request(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $token = null;
+        $credentials = request(['username', 'password']);
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return $this->errorResponse('Usuario o password incorrectos', 401);
+            }
+        } catch (\Throwable $th) {
+            return $this->errorResponse('No se pudo generar el token', 500);
         }
-
         return $this->respondWithToken($token);
     }
-
     /**
      * Get the authenticated User.
      *
@@ -39,21 +34,8 @@ class AuthApiController extends ApiController
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json(['data' => auth()->user()]);
     }
-
-    /**
-     * Log the user out (Invalidate the token).
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function logout()
-    {
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
-    }
-
     /**
      * Refresh a token.
      *
@@ -61,13 +43,55 @@ class AuthApiController extends ApiController
      */
     public function refresh()
     {
-        // return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(auth()->guard('api')->refresh());
+    }
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function logout(Request $request)
+    {
+        $header = $request->header('Authorization');
+
+        if ($header) {
+            try {
+                JWTAuth::invalidate($request->token);
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Sesion cerrada satisfactoriamente'
+                ]);
+            } catch (JWTException $exception) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Sorry, the user cannot be logged out'
+                ], 500);
+            }
+        }
+        $this->errorResponse('No existe el token en la cabecera', 500);
+    }
+
+    /**
+     * @param RegistrationFormRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $user = new User();
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->save();
+        $token = JWTAuth::fromUser($user);
+        return $this->respondWithToken($token);
     }
 
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -76,7 +100,7 @@ class AuthApiController extends ApiController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            // 'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+            'expires' => auth('api')->factory()->getTTL(),
+        ])->header('Authorization', $token);;
     }
 }

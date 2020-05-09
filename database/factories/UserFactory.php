@@ -22,7 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'username' => $faker->userName,
         'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => '$2y$12$csL2OKEXYmnKH0iPu04Gs./sgfhtez0hJTYiqZPMpTULngkPIOP6i', // password
         'empleado_id' =>Empleado::all()->random()->id,
         'remember_token' => Str::random(10),
     ];
