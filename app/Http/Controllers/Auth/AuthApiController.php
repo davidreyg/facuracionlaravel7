@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
-use ApiController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
 
 class AuthApiController extends ApiController
 {
@@ -62,7 +61,7 @@ class AuthApiController extends ApiController
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        // return $this->respondWithToken(auth()->refresh());
     }
 
     /**
@@ -77,7 +76,7 @@ class AuthApiController extends ApiController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            // 'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
 }
