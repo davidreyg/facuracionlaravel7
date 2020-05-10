@@ -56,7 +56,7 @@ class AuthApiController extends ApiController
 
         if ($header) {
             try {
-                JWTAuth::invalidate($request->token);
+                auth()->logout();
 
                 return response()->json([
                     'success' => true,
@@ -100,7 +100,7 @@ class AuthApiController extends ApiController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires' => auth('api')->factory()->getTTL(),
+            'expires' => auth()->factory()->getTTL(),
         ])->header('Authorization', $token);;
     }
 }

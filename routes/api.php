@@ -19,7 +19,7 @@ $api->version('v1', function ($api) {
         $api->get('user', 'AuthApiController@me', ['middleware' => ['auth.jwt']]);
     });
 
-
+    // $api->resource('categorias', 'App\Http\Controllers\Categoria\CategoriaController');
 
     $api->get('data', ['middleware' => ['auth.jwt']], function () {
         return ['Fruits' => 'Delicious and healthy!'];
