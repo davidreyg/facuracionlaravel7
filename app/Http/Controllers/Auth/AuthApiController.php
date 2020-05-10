@@ -100,7 +100,7 @@ class AuthApiController extends ApiController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires' => auth()->factory()->getTTL(),
+            'expires' => auth('api')->factory()->getTTL(),
         ])->header('Authorization', $token);;
     }
 }

@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Utils;
-
-use Illuminate\Support\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -15,14 +12,14 @@ trait ApiResponser
     }
     protected function errorResponse($message,$code)
     {
-        return response()->json(['error' => $message,'code' => $code],$code);
+        return response()->json(['message' => $message,'status_code' => $code],$code);
     }
-    protected function showAll($coleccion,$code = 200)
+    protected function showAll(ResourceCollection $coleccion,$code = 200)
     {
         return $this->successResponse($coleccion,$code);
     }
 
-    protected function showOne($modelo,$code = 200)
+    protected function showOne(JsonResource $modelo,$code = 200)
     {
         return $this->successResponse($modelo,$code);
     }
