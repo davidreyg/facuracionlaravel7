@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Producto;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Producto;
+use App\Http\Requests\ApiBaseRequest;
 
-class CrearProductoRequest extends FormRequest
+class CrearProductoRequest extends ApiBaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +24,6 @@ class CrearProductoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return Producto::$rules;
     }
 }

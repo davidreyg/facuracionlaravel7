@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Categoria;
 
+use App\Http\Requests\ApiBaseRequest;
 use App\Models\Categoria;
-use Illuminate\Foundation\Http\FormRequest;
 
-class ActualizarCategoriaRequest extends FormRequest
+class ActualizarCategoriaRequest extends ApiBaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

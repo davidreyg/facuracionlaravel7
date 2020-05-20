@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Producto;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ApiBaseRequest;
+use App\Models\Producto;
 
-class ActualizarProductoRequest extends FormRequest
+class ActualizarProductoRequest extends ApiBaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class ActualizarProductoRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,6 @@ class ActualizarProductoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        return Producto::$rules;
     }
 }
