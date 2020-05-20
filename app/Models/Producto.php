@@ -56,7 +56,7 @@ class Producto extends Model implements HasMedia
         'ganancia'      => 'required',
         'moneda'        => 'string|required',
         'descripcion'   => 'string|nullable|min:4|max:100',
-        'imagen'        => 'required|image',
+        'imagen'        => 'nullable',
         'categoria_id'  => 'required|exists:categorias,id',
     ];
 

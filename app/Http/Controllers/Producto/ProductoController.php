@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Producto;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\ApiController;
-use App\Http\Requests\Producto\ActualizarProductoRequest;
-use App\Http\Requests\Producto\CrearProductoRequest;
-use App\Http\Resources\Producto\ProductoCollection;
-use App\Http\Resources\Producto\ProductoResource;
 use App\Repositories\ProductoRepository;
+use Illuminate\Support\Facades\Response;
+use App\Http\Resources\Producto\ProductoResource;
+use App\Http\Resources\Producto\ProductoCollection;
+use App\Http\Requests\Producto\CrearProductoRequest;
+use App\Http\Requests\Producto\ActualizarProductoRequest;
+use Dingo\Api\Contract\Http\Request as HttpRequest;
 
 class ProductoController extends ApiController
 {
@@ -44,6 +47,10 @@ class ProductoController extends ApiController
     {
         $campos = $request->validated();
         $producto = $this->productoRepository->create($campos);
+        //Store Image
+        if ($request->hasFile('imagen') && $request->file('imagen')->isValid()) {
+            $producto->addMediaFromRequest('imagen')->toMediaCollection();
+        }
 
         return $this->showOne(new ProductoResource($producto), 201);
     }
@@ -69,9 +76,18 @@ class ProductoController extends ApiController
     public function update(ActualizarProductoRequest $request, Producto $producto)
     {
         $campos = $request->validated();
+        $this->productoRepository->update($campos, $producto);
+        // $nombreImagen = $producto->getMedia()->first()->file_name;
 
-        $this->categoriaRepository->update($campos, $producto);
+        // if ($nombreImagen == 'default_product_image.png') {
+        //     return "me parece raro :v";
+        // }
 
+        //Store Image
+        if ($request->hasFile('imagen') && $request->file('imagen')->isValid()) {
+            $producto->media($producto)->forceDelete();
+            $producto->addMediaFromRequest('imagen')->toMediaCollection();
+        }
         return $this->showOne(new ProductoResource($producto), 200);
     }
 
@@ -87,5 +103,25 @@ class ProductoController extends ApiController
         $producto->delete();
 
         return $this->showOne(new ProductoResource($producto), 200);
+    }
+
+
+    public function mostrarImagen(HttpRequest $request)
+    {
+        // $path = storage_path('app/public/' . $file.'/'.$filename);
+        $path = $request;
+        return $request->url;
+        if (!File::exists($path)) {
+            return "asd";
+            abort(404);
+        }
+        $file = File::get($path);
+        $type = File::mimeType($path);
+
+        $response = Response::make($file, 200);
+
+        $response->header("Content-Type", $type);
+
+        return $response;
     }
 }

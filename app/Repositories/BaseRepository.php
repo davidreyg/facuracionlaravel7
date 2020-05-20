@@ -161,11 +161,11 @@ abstract class BaseRepository
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
      */
-    public function update($input, $id)
+    public function update($input, $model)
     {
-        $query = $this->model->newQuery();
+        // $query = $this->model->newQuery();
 
-        $model = $query->findOrFail($id);
+        // $model = $query->findOrFail($id);
 
         $model->fill($input);
 

@@ -19,6 +19,7 @@ $api->version('v1', function ($api) {
         $api->get('user', 'AuthApiController@me', ['middleware' => ['auth.jwt']]);
     });
 
+    $api->get('imagen', 'App\Http\Controllers\Producto\ProductoController@mostrarImagen')->name('productos.mostrarImagen');
     $api->group(['middleware' => ['auth.jwt','bindings']], function ($api) {
         $api->resource('categorias', 'App\Http\Controllers\Categoria\CategoriaController');
         $api->resource('productos', 'App\Http\Controllers\Producto\ProductoController');

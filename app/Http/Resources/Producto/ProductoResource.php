@@ -26,6 +26,8 @@ class ProductoResource extends JsonResource
             'moneda' => $this->moneda,
             'categoria' => CategoriaResource::make($this->categoria),
             'categoria_id' => $this->categoria->id,
+            'imagen' => ($this->getMedia())->isEmpty() ? null : $this->getMedia(),
+            'imagen_url' => ($this->getMedia())->isEmpty() ? null : $this->getMedia()->first()->getUrl(),
             'links' => [
                 [
                     'rel' => 'self',

@@ -69,11 +69,11 @@ class CategoriaController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ActualizarCategoriaRequest $request, $id)
+    public function update(ActualizarCategoriaRequest $request,Categoria $categoria)
     {
         $campos = $request->validated();
 
-        $categoria = $this->categoriaRepository->update($campos, $id);
+        $categoria = $this->categoriaRepository->update($campos, $categoria);
 
         return $this->showOne(new CategoriaResource($categoria), 200);
     }

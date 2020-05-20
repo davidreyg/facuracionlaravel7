@@ -53,7 +53,8 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
-        'auth.jwt'  =>  \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        // 'auth.jwt'  =>  \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        'auth.jwt' => \App\Http\Middleware\RefreshToken::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
