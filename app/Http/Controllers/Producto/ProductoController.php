@@ -82,10 +82,13 @@ class ProductoController extends ApiController
         // if ($nombreImagen == 'default_product_image.png') {
         //     return "me parece raro :v";
         // }
+        $mediaItems = $producto->getMedia();
 
         //Store Image
         if ($request->hasFile('imagen') && $request->file('imagen')->isValid()) {
-            $producto->media($producto)->forceDelete();
+            if ($mediaItems->count()>0) {
+                $mediaItems[0]->delete();
+            }
             $producto->addMediaFromRequest('imagen')->toMediaCollection();
         }
         return $this->showOne(new ProductoResource($producto), 200);
@@ -101,7 +104,7 @@ class ProductoController extends ApiController
     {
 
         $producto->delete();
-
+        $producto->clearMediaCollection();
         return $this->showOne(new ProductoResource($producto), 200);
     }
 
