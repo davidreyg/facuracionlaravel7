@@ -77,11 +77,6 @@ class ProductoController extends ApiController
     {
         $campos = $request->validated();
         $this->productoRepository->update($campos, $producto);
-        // $nombreImagen = $producto->getMedia()->first()->file_name;
-
-        // if ($nombreImagen == 'default_product_image.png') {
-        //     return "me parece raro :v";
-        // }
         $mediaItems = $producto->getMedia();
 
         //Store Image
