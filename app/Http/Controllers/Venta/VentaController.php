@@ -4,18 +4,18 @@ namespace App\Http\Controllers\Venta;
 
 use App\Models\Venta;
 use Illuminate\Http\Request;
+use App\Repositories\VentaRepository;
 use App\Http\Controllers\ApiController;
 
 class VentaController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    /** @var  VentaRepository */
+    private $ventaRepository;
+
+    public function __construct(VentaRepository $ventaRepo)
     {
-        //
+        $this->ventaRepository = $ventaRepo;
     }
 
     /**

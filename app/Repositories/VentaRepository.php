@@ -9,7 +9,7 @@ use App\Models\Venta;
  * @version April 10, 2020, 7:21 pm -05
  */
 
-class ProductoRepository extends BaseRepository
+class VentaRepository extends BaseRepository
 {
     /**
      * @var array
