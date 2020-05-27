@@ -25,6 +25,15 @@ class CrearVentaRequest extends ApiBaseRequest
      */
     public function rules()
     {
-        return Venta::$rules;
+        $rules = [];
+        $rules = [
+            'total'                       => 'required|numeric',
+            'user_id'                     => 'required|exists:users,id',
+            'cliente_id'                  => 'required|exists:clientes,id,deleted_at,NULL',
+            'detalle_venta'               => 'required|array',
+            'detalle_venta.*.producto_id' => 'required|exists:productos,id,deleted_at,NULL',
+            'detalle_venta.*.cantidad'    => 'required|numeric'
+        ];
+        return $rules;
     }
 }

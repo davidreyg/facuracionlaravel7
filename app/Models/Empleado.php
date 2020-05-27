@@ -19,7 +19,7 @@ class Empleado extends Model
         'telefono',
         'direccion',
         'numero_documento',
-        'id_tipo_documento'
+        'tipo_documento_id'
     ];
 
     /**
@@ -35,7 +35,7 @@ class Empleado extends Model
         'telefono' => 'integer',
         'direccion' => 'string',
         'numero_documento' => 'integer',
-        'id_tipo_documento' => 'integer'
+        'tipo_documento_id' => 'integer'
     ];
 
     /**
@@ -50,7 +50,7 @@ class Empleado extends Model
         'telefono' => 'nullable',
         'direccion' => 'nullable',
         'numero_documento' => 'required',
-        'id_tipo_documento' => 'required'
+        'tipo_documento_id' => 'required'
     ];
 
     public function tipo_documento()

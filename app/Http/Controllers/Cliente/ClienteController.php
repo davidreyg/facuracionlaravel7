@@ -3,11 +3,22 @@
 namespace App\Http\Controllers\Cliente;
 
 use App\Models\Cliente;
-use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use App\Repositories\ClienteRepository;
+use App\Http\Requests\Cliente\CrearClienteRequest;
+use App\Http\Resources\Cliente\ClienteCollection;
+use App\Http\Resources\Cliente\ClienteResource;
 
 class ClienteController extends ApiController
 {
+    /** @var  ClienteRepository */
+    private $clienteRepository;
+
+    public function __construct(ClienteRepository $clienteRepo)
+    {
+        $this->clienteRepository = $clienteRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,9 @@ class ClienteController extends ApiController
      */
     public function index()
     {
-        //
+        $cliente = $this->clienteRepository->all();
+
+        return $this->showAll(new ClienteCollection($cliente));
     }
 
     /**
@@ -24,9 +37,12 @@ class ClienteController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CrearClienteRequest $request)
     {
-        //
+        $campos = $request->validated();
+        $cliente = $this->clienteRepository->create($campos);
+
+        return $this->showOne(new ClienteResource($cliente), 201);
     }
 
     /**
@@ -37,7 +53,7 @@ class ClienteController extends ApiController
      */
     public function show(Cliente $cliente)
     {
-        //
+        return $this->showOne(new ClienteResource($cliente), 200);
     }
 
     /**
@@ -47,9 +63,11 @@ class ClienteController extends ApiController
      * @param  \App\Cliente  $cliente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente $cliente)
+    public function update(CrearClienteRequest $request, Cliente $cliente)
     {
-        //
+        $campos = $request->validated();
+        $this->clienteRepository->update($campos, $cliente);
+        return $this->showOne(new clienteResource($cliente), 200);
     }
 
     /**
@@ -60,6 +78,7 @@ class ClienteController extends ApiController
      */
     public function destroy(Cliente $cliente)
     {
-        //
+        $cliente->delete();
+        return $this->showOne(new ClienteResource($cliente), 200);
     }
 }

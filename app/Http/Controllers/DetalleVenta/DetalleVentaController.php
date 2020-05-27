@@ -1,14 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Venta;
+namespace App\Http\Controllers\DetalleVenta;
 
-use App\Models\Venta;
+use App\Models\DetalleVenta;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
-use App\Http\Requests\Venta\CrearVentaRequest;
 
-class VentaController extends ApiController
+class DetalleVentaController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -26,21 +24,18 @@ class VentaController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CrearVentaRequest $request)
+    public function store(Request $request)
     {
-        return $request;
-        DB::transaction(function () {
-
-        });
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Venta  $venta
+     * @param  \App\DetalleVenta  $detalleVenta
      * @return \Illuminate\Http\Response
      */
-    public function show(Venta $venta)
+    public function show(DetalleVenta $detalleVenta)
     {
         //
     }
@@ -49,10 +44,10 @@ class VentaController extends ApiController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Venta  $venta
+     * @param  \App\DetalleVenta  $detalleVenta
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Venta $venta)
+    public function update(Request $request, DetalleVenta $detalleVenta)
     {
         //
     }
@@ -60,10 +55,10 @@ class VentaController extends ApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Venta  $venta
+     * @param  \App\DetalleVenta  $detalleVenta
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Venta $venta)
+    public function destroy(DetalleVenta $detalleVenta)
     {
         //
     }
