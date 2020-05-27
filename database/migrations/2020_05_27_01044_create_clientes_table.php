@@ -15,10 +15,16 @@ class CreateClientesTable extends Migration
     {
         Schema::create('clientes', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('nombres', 20);
-            $table->string('apellidos', 100);
-            $table->string('telefono', 100)->nullable();
+            $table->string('nombres');
+            $table->string('apellidos');
+            $table->string('correo')->nullable();
+            $table->integer('telefono');
+            $table->string('direccion')->nullable();
+            $table->integer('numero_documento');
+            $table->unsignedBigInteger('tipo_documento_id');
             $table->timestamps();
+            $table->foreign('tipo_documento_id')->references('id')->on('tipo_documentos')
+                ->onDelete('restrict');
             $table->softDeletes();
         });
     }

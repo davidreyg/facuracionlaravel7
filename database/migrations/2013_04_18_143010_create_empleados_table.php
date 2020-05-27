@@ -25,7 +25,6 @@ class CreateEmpleadosTable extends Migration
             $table->unsignedBigInteger('tipo_documento_id')->unsigned();
             $table->timestamps();
             $table->foreign('tipo_documento_id')->references('id')->on('tipo_documentos')
-            ->onDelete('restrict')
             ->onDelete('restrict');
             $table->softDeletes();
         });

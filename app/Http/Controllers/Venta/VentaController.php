@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Venta;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use App\Repositories\VentaRepository;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\ApiController;
+use App\Http\Requests\Venta\CrearVentaRequest;
 
 class VentaController extends ApiController
 {
@@ -24,9 +26,12 @@ class VentaController extends ApiController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CrearVentaRequest $request)
     {
-        //
+        return $request;
+        DB::transaction(function () {
+
+        });
     }
 
     /**
