@@ -11,10 +11,13 @@ class DetalleVenta extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $table = 'detalle_venta';
+
     public $fillable = [
-        'total',
-        'user_id',
-        'cliente_id'
+        'cantidad',
+        'precio_unitario',
+        'precio_total',
+        'producto_id'
     ];
 
     /**
@@ -23,15 +26,26 @@ class DetalleVenta extends Model
      * @var array
      */
     protected $casts = [
-        'total'      => 'integer',
-        'user_id'    => 'integer',
-        'cliente_id' => 'integer',
+        'total'           => 'integer',
+        'precio_unitario' => 'integer',
+        'precio_total'    => 'integer',
+        'venta_id'        => 'integer',
+        'producto_id'     => 'integer',
     ];
 
     public static $rules = [
         'total' => 'required|numeric',
-        'user_id' => 'required',
-        'user_id'  => 'required|exists:usuarios,id,deleted_at,NULL',
-        'cliente_id'  => 'required|exists:clientes,id,deleted_at,NULL'
+        'venta_id'  => 'required|exists:ventas,id,deleted_at,NULL',
+        'producto_id'  => 'required|exists:productos,id,deleted_at,NULL'
     ];
+
+    public function venta()
+    {
+        return $this->belongsTo(Venta::class);
+    }
+
+    public function producto()
+    {
+        return $this->belongsTo(Producto::class);
+    }
 }

@@ -5,11 +5,25 @@ namespace App\Http\Controllers\Venta;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Repositories\VentaRepository;
 use App\Http\Controllers\ApiController;
+use App\Http\Resources\Venta\VentaCollection;
 use App\Http\Requests\Venta\CrearVentaRequest;
+use App\Models\DetalleVenta;
+use App\Repositories\DetalleVentaRepository;
 
 class VentaController extends ApiController
 {
+    /** @var  ventaRepository */
+    private $ventaRepository;
+
+    /** @var  detalleventaRepository */
+    private $detalleventaRepository;
+
+    public function __construct(VentaRepository $ventaRepo)
+    {
+        $this->ventaRepository = $ventaRepo;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +31,9 @@ class VentaController extends ApiController
      */
     public function index()
     {
-        //
+        $producto = $this->ventaRepository->all();
+
+        return $this->showAll(new VentaCollection($producto));
     }
 
     /**
@@ -28,10 +44,23 @@ class VentaController extends ApiController
      */
     public function store(CrearVentaRequest $request)
     {
-        return $request;
-        DB::transaction(function () {
+        $camposVenta = $request->except('detalle_venta');
+        $camposDetalle = $request->only('detalle_venta')['detalle_venta'];
 
-        });
+        DB::beginTransaction();
+        try {
+            $venta = $this->ventaRepository->create($camposVenta);
+            foreach ($camposDetalle as $detalle) {
+                $item = new DetalleVenta($detalle);
+                $venta->detalle_venta()->create($detalle);
+            }
+            DB::commit();
+            // all good
+        } catch (\Exception $e) {
+            DB::rollback();
+            // something went wrong
+        }
+        return $venta;
     }
 
     /**

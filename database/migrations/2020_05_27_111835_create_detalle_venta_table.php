@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetalleVentasTable extends Migration
+class CreateDetalleVentaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateDetalleVentasTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_ventas', function (Blueprint $table) {
-            $table->bigInteger('id')->unsigned();
+        Schema::create('detalle_venta', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned();
             $table->integer('cantidad')->unsigned();
             $table->integer('precio_unitario')->unsigned();
             $table->integer('precio_total')->unsigned();
