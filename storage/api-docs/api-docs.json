@@ -28,6 +28,7 @@
                     "categorias"
                 ],
                 "summary": "Mostrar categorias",
+                "operationId": "App\\Http\\Controllers\\Categoria\\CategoriaController::index",
                 "responses": {
                     "401": {
                         "description": "Inserta tu token pues hermano!"
@@ -49,7 +50,7 @@
                 "summary": "Agregar una nueva categoria.",
                 "operationId": "store",
                 "requestBody": {
-                    "description": "Pet object that needs to be added to the store",
+                    "description": "Categoria a ser creada",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -204,6 +205,190 @@
                     }
                 ]
             }
+        },
+        "/clientes": {
+            "get": {
+                "tags": [
+                    "clientes"
+                ],
+                "summary": "Mostrar clientes",
+                "operationId": "App\\Http\\Controllers\\Cliente\\ClienteController::index",
+                "responses": {
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "200": {
+                        "description": "Lista de clientes. Correcto"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "clientes"
+                ],
+                "summary": "Agrega un nuevo Cliente.",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Cliente a ser agregado",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "201": {
+                        "description": "Creado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/clientes/{clienteId}": {
+            "get": {
+                "tags": [
+                    "clientes"
+                ],
+                "summary": "Buscar Cliente por ID",
+                "description": "Retorna un solo Cliente",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "clienteId",
+                        "in": "path",
+                        "description": "ID del cliente a retornar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Cliente"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "404": {
+                        "description": "Cliente no existe"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "clientes"
+                ],
+                "summary": "Actualizar un cliente existente",
+                "description": "",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "clienteId",
+                        "in": "path",
+                        "description": "ID del cliente a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Cliente a ser actualizado",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Cliente"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Cliente no encontrado"
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "200": {
+                        "description": "Cliente actualizado correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "clientes"
+                ],
+                "summary": "Elimina un Cliente",
+                "description": "",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "clienteId",
+                        "in": "path",
+                        "description": "Id del cliente a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Cliente no encontrada"
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "403": {
+                        "description": "Tiene productos relacionados"
+                    },
+                    "200": {
+                        "description": "Cliente eliminado correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -216,6 +401,39 @@
                     },
                     "descripcion": {
                         "description": "Descripcion del producto",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Cliente": {
+                "properties": {
+                    "nombres": {
+                        "description": "Nombres del producto",
+                        "type": "string"
+                    },
+                    "apellidos": {
+                        "description": "Apellidos del producto",
+                        "type": "string"
+                    },
+                    "correo": {
+                        "description": "correo del producto",
+                        "type": "string"
+                    },
+                    "telefono": {
+                        "description": "telefono del producto",
+                        "type": "string"
+                    },
+                    "direccion": {
+                        "description": "direccion del producto",
+                        "type": "string"
+                    },
+                    "numero_documento": {
+                        "description": "numero_documento del producto",
+                        "type": "string"
+                    },
+                    "tipo_documento_id": {
+                        "description": "tipo_documento_id del producto",
                         "type": "string"
                     }
                 },

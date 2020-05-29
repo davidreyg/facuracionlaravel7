@@ -56,7 +56,7 @@ class CategoriaController extends ApiController
      *     operationId="store",
      *     summary="Agregar una nueva categoria.",
      *     @OA\RequestBody(
-     *         description="Pet object that needs to be added to the store",
+     *         description="Categoria a ser creada",
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/Categoria")
      *     ),

@@ -20,9 +20,22 @@ class ClienteController extends ApiController
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/clientes",
+     *     summary="Mostrar clientes",
+     *     tags={"clientes"},
+     *     @OA\Response(
+     *         response="401",
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de clientes. Correcto",
+     *     ),
+     *     security={
+     *         {"bearer": {}}
+     *     }
+     * )
      */
     public function index()
     {
@@ -32,10 +45,28 @@ class ClienteController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *     path="/clientes",
+     *     tags={"clientes"},
+     *     operationId="store",
+     *     summary="Agrega un nuevo Cliente.",
+     *     @OA\RequestBody(
+     *         description="Cliente a ser agregado",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Cliente")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Creado",
+     *     ),
+     *     security={
+     *         {"bearer": {}}
+     *     }
+     * )
      */
     public function store(CrearClienteRequest $request)
     {
@@ -46,10 +77,39 @@ class ClienteController extends ApiController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Cliente  $cliente
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/clientes/{clienteId}",
+     *     summary="Buscar Cliente por ID",
+     *     description="Retorna un solo Cliente",
+     *     operationId="show",
+     *     tags={"clientes"},
+     *     @OA\Parameter(
+     *         description="ID del cliente a retornar",
+     *         in="path",
+     *         name="clienteId",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Cliente")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Cliente no existe"
+     *     ),
+     *     security={
+     *       {"bearer": {}}
+     *     }
+     * )
      */
     public function show(Cliente $cliente)
     {
@@ -57,11 +117,43 @@ class ClienteController extends ApiController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cliente  $cliente
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *     path="/clientes/{clienteId}",
+     *     tags={"clientes"},
+     *     operationId="update",
+     *     summary="Actualizar un cliente existente",
+     *     description="",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Cliente a ser actualizado",
+     *         @OA\JsonContent(ref="#/components/schemas/Cliente")
+     *     ),
+     *     @OA\Parameter(
+     *         description="ID del cliente a actualizar",
+     *         in="path",
+     *         name="clienteId",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Cliente no encontrado",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Cliente actualizado correctamente"
+     *     ),
+     *     security={
+     *       {"bearer": {}}
+     *     }
+     * )
      */
     public function update(CrearClienteRequest $request, Cliente $cliente)
     {
@@ -71,10 +163,42 @@ class ClienteController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Cliente  $cliente
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *     path="/clientes/{clienteId}",
+     *     summary="Elimina un Cliente",
+     *     description="",
+     *     operationId="delete",
+     *     tags={"clientes"},
+     *     @OA\Parameter(
+     *         description="Id del cliente a eliminar",
+     *         in="path",
+     *         name="clienteId",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Cliente no encontrada",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Tiene productos relacionados",
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Cliente eliminado correctamente"
+     *     ),
+     *     security={
+     *       {"bearer": {}}
+     *     }
+     * )
      */
     public function destroy(Cliente $cliente)
     {
