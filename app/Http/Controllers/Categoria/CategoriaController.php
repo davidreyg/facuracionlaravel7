@@ -24,11 +24,23 @@ class CategoriaController extends ApiController
     {
         $this->categoriaRepository = $categoriaRepo;
     }
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/categorias",
+     *     summary="Mostrar categorias",
+     *     tags={"categorias"},
+     *     @OA\Response(
+     *         response="401",
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de categorias. Correcto",
+     *     ),
+     *     security={
+     *         {"bearer": {}}
+     *     }
+     * )
      */
     public function index()
     {
@@ -38,10 +50,28 @@ class CategoriaController extends ApiController
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *     path="/categorias",
+     *     tags={"categorias"},
+     *     operationId="store",
+     *     summary="Agregar una nueva categoria.",
+     *     @OA\RequestBody(
+     *         description="Pet object that needs to be added to the store",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Categoria")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Creado",
+     *     ),
+     *     security={
+     *         {"bearer": {}}
+     *     }
+     * )
      */
     public function store(CrearCategoriaRequest $request)
     {
@@ -52,10 +82,39 @@ class CategoriaController extends ApiController
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Get(
+     *     path="/categorias/{categoriaId}",
+     *     summary="Buscar categoria por ID",
+     *     description="Retorna una sola categoria",
+     *     operationId="show",
+     *     tags={"categorias"},
+     *     @OA\Parameter(
+     *         description="ID de la categoria a retornar",
+     *         in="path",
+     *         name="categoriaId",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/Categoria")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Categoria no existe"
+     *     ),
+     *     security={
+     *       {"bearer": {}}
+     *     }
+     * )
      */
     public function show(Categoria $categoria)
     {
@@ -63,13 +122,45 @@ class CategoriaController extends ApiController
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *     path="/categorias/{categoriaId}",
+     *     tags={"categorias"},
+     *     operationId="update",
+     *     summary="Actualizar una categoria existente",
+     *     description="",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Categoria a ser actualizada",
+     *         @OA\JsonContent(ref="#/components/schemas/Categoria")
+     *     ),
+     *     @OA\Parameter(
+     *         description="ID de la categoria a actualizar",
+     *         in="path",
+     *         name="categoriaId",
+     *         required=true,
+     *         @OA\Schema(
+     *           type="integer",
+     *           format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Categoria no encontrada",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Categoria actualizada correctamente"
+     *     ),
+     *     security={
+     *       {"bearer": {}}
+     *     }
+     * )
      */
-    public function update(ActualizarCategoriaRequest $request,Categoria $categoria)
+    public function update(ActualizarCategoriaRequest $request, Categoria $categoria)
     {
         $campos = $request->validated();
 
@@ -79,10 +170,42 @@ class CategoriaController extends ApiController
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Delete(
+     *     path="/categorias/{categoriaId}",
+     *     summary="Elimina una categoria",
+     *     description="",
+     *     operationId="delete",
+     *     tags={"categorias"},
+     *     @OA\Parameter(
+     *         description="Id de la categoria a eliminar",
+     *         in="path",
+     *         name="categoriaId",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="integer",
+     *             format="int64"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Categoria no encontrada",
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Inserta tu token pues hermano!",
+     *     ),
+     *     @OA\Response(
+     *         response=403,
+     *         description="Tiene productos relacionados",
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Categoria eliminada correctamente"
+     *     ),
+     *     security={
+     *       {"bearer": {}}
+     *     }
+     * )
      */
     public function destroy(Categoria $categoria)
     {

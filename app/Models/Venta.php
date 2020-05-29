@@ -30,8 +30,12 @@ class Venta extends Model
 
     public static $rules = [
         'total' => 'required|numeric',
-        'user_id' => 'required',
         'user_id'  => 'required|exists:usuarios,id,deleted_at,NULL',
         'cliente_id'  => 'required|exists:clientes,id,deleted_at,NULL'
     ];
+
+    public function detalle_venta()
+    {
+        return $this->hasMany(DetalleVenta::class);
+    }
 }

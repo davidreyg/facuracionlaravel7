@@ -1,0 +1,235 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FacturaloYa",
+        "description": "Sistema de facturacion en linea. Con carrito de compras",
+        "contact": {
+            "email": "neisserrey@upeu.edu.pe"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://facturaloya.test/api/",
+            "description": "Documentacion de la Facturacion en Linea"
+        },
+        {
+            "url": "http://facturaloya.test"
+        }
+    ],
+    "paths": {
+        "/categorias": {
+            "get": {
+                "tags": [
+                    "categorias"
+                ],
+                "summary": "Mostrar categorias",
+                "responses": {
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "200": {
+                        "description": "Lista de categorias. Correcto"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "categorias"
+                ],
+                "summary": "Agregar una nueva categoria.",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Pet object that needs to be added to the store",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Categoria"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "201": {
+                        "description": "Creado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/categorias/{categoriaId}": {
+            "get": {
+                "tags": [
+                    "categorias"
+                ],
+                "summary": "Buscar categoria por ID",
+                "description": "Retorna una sola categoria",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "categoriaId",
+                        "in": "path",
+                        "description": "ID de la categoria a retornar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Categoria"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "404": {
+                        "description": "Categoria no existe"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "categorias"
+                ],
+                "summary": "Actualizar una categoria existente",
+                "description": "",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "categoriaId",
+                        "in": "path",
+                        "description": "ID de la categoria a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Categoria a ser actualizada",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Categoria"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Categoria no encontrada"
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "200": {
+                        "description": "Categoria actualizada correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "categorias"
+                ],
+                "summary": "Elimina una categoria",
+                "description": "",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "categoriaId",
+                        "in": "path",
+                        "description": "Id de la categoria a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Categoria no encontrada"
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "403": {
+                        "description": "Tiene productos relacionados"
+                    },
+                    "200": {
+                        "description": "Categoria eliminada correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Categoria": {
+                "properties": {
+                    "nombre": {
+                        "description": "Nombre del producto",
+                        "type": "string"
+                    },
+                    "descripcion": {
+                        "description": "Descripcion del producto",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearer": {
+                "type": "http",
+                "description": "Authorization token obtained from logging in.",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

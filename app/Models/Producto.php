@@ -65,5 +65,10 @@ class Producto extends Model implements HasMedia
         return $this->belongsTo(Categoria::class);
     }
 
+    public function detalleVentas()
+    {
+        return $this->hasMany(DetalleVenta::class);
+    }
+
 
 }

@@ -5,8 +5,9 @@ namespace App\Http\Controllers\TipoDocumento;
 use App\Http\Controllers\Controller;
 use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
+use L5Swagger\Http\Controllers\SwaggerController;
 
-class TipoDocumentoController extends Controller
+class TipoDocumentoController extends SwaggerController
 {
     /**
      * Display a listing of the resource.
