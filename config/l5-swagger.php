@@ -8,7 +8,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'title' => 'L5 Swagger UI',
+        'title' => 'Documentacion de FacturaloYa!',
     ],
 
     'routes' => [
@@ -107,7 +107,7 @@ return [
         |--------------------------------------------------------------------------
         */
 
-        'base' => env('L5_SWAGGER_BASE_PATH', 'http://facturaloya.test'),
+        'base' => env('L5_SWAGGER_BASE_PATH', 'http://facturaloya.test/api/'),
 
         /*
         |--------------------------------------------------------------------------

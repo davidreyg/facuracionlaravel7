@@ -14,11 +14,11 @@
     },
     "servers": [
         {
-            "url": "http://facturaloya.test/api/",
+            "url": "http://facturaloya.test/api",
             "description": "Documentacion de la Facturacion en Linea"
         },
         {
-            "url": "http://facturaloya.test"
+            "url": "http://facturaloya.test/api/"
         }
     ],
     "paths": {
@@ -409,32 +409,57 @@
             "Cliente": {
                 "properties": {
                     "nombres": {
-                        "description": "Nombres del producto",
+                        "description": "Nombres del cliente",
                         "type": "string"
                     },
                     "apellidos": {
-                        "description": "Apellidos del producto",
+                        "description": "Apellidos del cliente",
                         "type": "string"
                     },
                     "correo": {
-                        "description": "correo del producto",
+                        "description": "correo del cliente",
                         "type": "string"
                     },
                     "telefono": {
-                        "description": "telefono del producto",
-                        "type": "string"
+                        "description": "telefono del cliente",
+                        "type": "int"
                     },
                     "direccion": {
-                        "description": "direccion del producto",
+                        "description": "direccion del cliente",
                         "type": "string"
                     },
                     "numero_documento": {
-                        "description": "numero_documento del producto",
-                        "type": "string"
+                        "description": "numero_documento del cliente",
+                        "type": "int"
                     },
                     "tipo_documento_id": {
-                        "description": "tipo_documento_id del producto",
-                        "type": "string"
+                        "description": "tipo_documento_id del cliente",
+                        "type": "int"
+                    }
+                },
+                "type": "object"
+            },
+            "DetalleVenta": {
+                "properties": {
+                    "cantidad": {
+                        "description": "Cantidad del detalle de venta",
+                        "type": "int"
+                    },
+                    "precio_unitario": {
+                        "description": "Precio unitario del detalle de la venta",
+                        "type": "int"
+                    },
+                    "precio_total": {
+                        "description": "Precio del detalle de la venta",
+                        "type": "int"
+                    },
+                    "producto_id": {
+                        "description": "Id del producto",
+                        "type": "int"
+                    },
+                    "venta_id": {
+                        "description": "Id de la venta a realizar",
+                        "type": "int"
                     }
                 },
                 "type": "object"

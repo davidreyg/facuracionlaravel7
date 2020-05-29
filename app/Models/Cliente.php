@@ -20,7 +20,7 @@ class Cliente extends Model
      * @OA\Property(
      *   property="nombres",
      *   type="string",
-     *   description="Nombres del producto"
+     *   description="Nombres del cliente"
      * )
      */
     /**
@@ -30,7 +30,7 @@ class Cliente extends Model
      * @OA\Property(
      *   property="apellidos",
      *   type="string",
-     *   description="Apellidos del producto"
+     *   description="Apellidos del cliente"
      * )
      */
     /**
@@ -40,17 +40,17 @@ class Cliente extends Model
      * @OA\Property(
      *   property="correo",
      *   type="string",
-     *   description="correo del producto"
+     *   description="correo del cliente"
      * )
      */
     /**
      * The product name
-     * @var string
+     * @var int
      *
      * @OA\Property(
      *   property="telefono",
-     *   type="string",
-     *   description="telefono del producto"
+     *   type="int",
+     *   description="telefono del cliente"
      * )
      */
         /**
@@ -60,27 +60,27 @@ class Cliente extends Model
      * @OA\Property(
      *   property="direccion",
      *   type="string",
-     *   description="direccion del producto"
+     *   description="direccion del cliente"
      * )
      */
     /**
      * The product name
-     * @var string
+     * @var int
      *
      * @OA\Property(
      *   property="numero_documento",
-     *   type="string",
-     *   description="numero_documento del producto"
+     *   type="int",
+     *   description="numero_documento del cliente"
      * )
      */
     /**
      * The product name
-     * @var string
+     * @var int
      *
      * @OA\Property(
      *   property="tipo_documento_id",
-     *   type="string",
-     *   description="tipo_documento_id del producto"
+     *   type="int",
+     *   description="tipo_documento_id del cliente"
      * )
      */
     public $fillable = [

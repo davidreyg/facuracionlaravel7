@@ -22,7 +22,7 @@ use Dingo\Api\Routing\Helpers;
 */
 /**
  *  @OA\Server(
- *      url="http://facturaloya.test/api/",
+ *      url=L5_SWAGGER_CONST_HOST,
  *      description="Documentacion de la Facturacion en Linea"
  *  )
  */

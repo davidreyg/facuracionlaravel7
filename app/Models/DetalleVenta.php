@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @OA\Schema()
+ */
 class DetalleVenta extends Model
 {
     use SoftDeletes;
@@ -13,6 +16,56 @@ class DetalleVenta extends Model
 
     protected $table = 'detalle_venta';
 
+    /**
+     * The product name
+     * @var int
+     *
+     * @OA\Property(
+     *   property="cantidad",
+     *   type="int",
+     *   description="Cantidad del detalle de venta"
+     * )
+     */
+    /**
+     * The product name
+     * @var int
+     *
+     * @OA\Property(
+     *   property="precio_unitario",
+     *   type="int",
+     *   description="Precio unitario del detalle de la venta"
+     * )
+     */
+    /**
+     * The product name
+     * @var int
+     *
+     * @OA\Property(
+     *   property="precio_total",
+     *   type="int",
+     *   description="Precio del detalle de la venta"
+     * )
+     */
+    /**
+     * The product name
+     * @var int
+     *
+     * @OA\Property(
+     *   property="producto_id",
+     *   type="int",
+     *   description="Id del producto"
+     * )
+     */
+        /**
+     * The product name
+     * @var int
+     *
+     * @OA\Property(
+     *   property="venta_id",
+     *   type="int",
+     *   description="Id de la venta a realizar"
+     * )
+     */
     public $fillable = [
         'cantidad',
         'precio_unitario',
