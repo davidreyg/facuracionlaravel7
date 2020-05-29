@@ -5,19 +5,37 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @OA\Schema()
+ */
+
 class Categoria extends Model
 {
     use SoftDeletes;
 
+    /**
+     * The product name
+     * @var string
+     *
+     * @OA\Property(
+     *   property="nombre",
+     *   type="string",
+     *   description="Nombre del producto"
+     * )
+     */
 
     protected $dates = ['deleted_at'];
-
-
-
-    public $fillable = [
-        'nombre',
-        'descripcion'
-    ];
+    /**
+     * The product name
+     * @var string
+     *
+     * @OA\Property(
+     *   property="descripcion",
+     *   type="string",
+     *   description="Descripcion del producto"
+     * )
+     */
+    public $fillable = ['nombre', 'descripcion'];
 
     /**
      * The attributes that should be casted to native types.
@@ -44,6 +62,4 @@ class Categoria extends Model
     {
         return $this->hasMany(Producto::class);
     }
-
-
 }

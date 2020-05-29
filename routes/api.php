@@ -12,7 +12,7 @@
 $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     $api->group(['namespace' => 'App\Http\Controllers\Auth', 'prefix' => 'auth'], function ($api) {
-        $api->post('login', 'AuthApiController@login');
+        $api->post('login', ['as' => 'login', 'uses' => 'AuthApiController@login']);
         $api->post('register', 'AuthApiController@register');
         $api->post('logout', 'AuthApiController@logout', ['middleware' => ['auth.jwt']]);
         $api->get('refresh', 'AuthApiController@refresh', ['middleware' => ['auth.jwt']]);

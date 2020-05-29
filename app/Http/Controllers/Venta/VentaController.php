@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Venta;
 
 use App\Models\Venta;
+use App\Models\DetalleVenta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\VentaRepository;
 use App\Http\Controllers\ApiController;
+use App\Repositories\DetalleVentaRepository;
 use App\Http\Resources\Venta\VentaCollection;
 use App\Http\Requests\Venta\CrearVentaRequest;
-use App\Models\DetalleVenta;
-use App\Repositories\DetalleVentaRepository;
+
 
 class VentaController extends ApiController
 {

@@ -34,9 +34,9 @@ class DetalleVenta extends Model
     ];
 
     public static $rules = [
-        'total' => 'required|numeric',
-        'venta_id'  => 'required|exists:ventas,id,deleted_at,NULL',
-        'producto_id'  => 'required|exists:productos,id,deleted_at,NULL'
+        'total'       => 'required|numeric',
+        'venta_id'    => 'required|exists:ventas,id,deleted_at,NULL',
+        'producto_id' => 'required|exists:productos,id,deleted_at,NULL'
     ];
 
     public function venta()
