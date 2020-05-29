@@ -6,6 +6,9 @@ use App\Models\Empleado;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @OA\Schema()
+ */
 class TipoDocumento extends Model
 {
     use SoftDeletes;
@@ -15,8 +18,36 @@ class TipoDocumento extends Model
 
     protected $dates = ['deleted_at'];
 
-
-
+    /**
+     * The product name
+     * @var string
+     *
+     * @OA\Property(
+     *   property="nombre",
+     *   type="string",
+     *   description="Nombre del tipo de documento"
+     * )
+     */
+    /**
+     * The product name
+     * @var string
+     *
+     * @OA\Property(
+     *   property="tabla",
+     *   type="string",
+     *   description="tabla del tipo de documento"
+     * )
+     */
+    /**
+     * The product name
+     * @var int
+     *
+     * @OA\Property(
+     *   property="tamaño",
+     *   type="int",
+     *   description="tamaño del tipo de documento"
+     * )
+     */
     public $fillable = [
         'nombre',
         'tabla',

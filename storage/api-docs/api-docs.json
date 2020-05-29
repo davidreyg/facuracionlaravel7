@@ -22,6 +22,39 @@
         }
     ],
     "paths": {
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Iniciar sesion para obtener un token de acceso.",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Credenciales del usuario (username, password)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Datos invalidos!"
+                    },
+                    "201": {
+                        "description": "Successful pues :3"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/categorias": {
             "get": {
                 "tags": [
@@ -389,6 +422,189 @@
                     }
                 ]
             }
+        },
+        "/tipo_documentos": {
+            "get": {
+                "tags": [
+                    "tipo_documentos"
+                ],
+                "summary": "Mostrar tipo de documentos",
+                "operationId": "App\\Http\\Controllers\\TipoDocumento\\TipoDocumentoController::index",
+                "responses": {
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "200": {
+                        "description": "Lista de tipo de documentos. Correcto"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "tipo_documentos"
+                ],
+                "summary": "Agregar un nuevo tipo de documento(DNI,CARNET DE EXTRANJERIA, CEDULA,ETC).",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "TipoDocumento a ser creado",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoDocumento"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "201": {
+                        "description": "Creado"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/tipo_documentos/{tipo_documento_id}": {
+            "get": {
+                "tags": [
+                    "tipo_documentos"
+                ],
+                "summary": "Buscar tipo de documentos por ID",
+                "description": "Retorna un solo tipo de documento",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "tipo_documento_id",
+                        "in": "path",
+                        "description": "ID del tipo de documento a retornar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TipoDocumento"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "404": {
+                        "description": "TIpo de documento no existe"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/tipo_documentos/{tipoDocumentoId}": {
+            "put": {
+                "tags": [
+                    "tipo_documentos"
+                ],
+                "summary": "Actualizar un tipo de documento existente",
+                "description": "",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "tipoDocumentoId",
+                        "in": "path",
+                        "description": "ID del documento a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Tipo de documento a ser actualizado",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TipoDocumento"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Tipo de documento no encontrada"
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "200": {
+                        "description": "Tipo de documento actualizada correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "tipo_documentos"
+                ],
+                "summary": "Elimina una tipo de documento",
+                "description": "",
+                "operationId": "delete",
+                "parameters": [
+                    {
+                        "name": "tipoDocumentoId",
+                        "in": "path",
+                        "description": "Id del tipo de documento a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Tipo de documento no encontrada"
+                    },
+                    "401": {
+                        "description": "Inserta tu token pues hermano!"
+                    },
+                    "200": {
+                        "description": "Tipo de documento eliminada correctamente"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -460,6 +676,36 @@
                     "venta_id": {
                         "description": "Id de la venta a realizar",
                         "type": "int"
+                    }
+                },
+                "type": "object"
+            },
+            "TipoDocumento": {
+                "properties": {
+                    "nombre": {
+                        "description": "Nombre del tipo de documento",
+                        "type": "string"
+                    },
+                    "tabla": {
+                        "description": "tabla del tipo de documento",
+                        "type": "string"
+                    },
+                    "tamaño": {
+                        "description": "tamaño del tipo de documento",
+                        "type": "int"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "properties": {
+                    "username": {
+                        "description": "username del usuario",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "password del usuario",
+                        "type": "string"
                     }
                 },
                 "type": "object"

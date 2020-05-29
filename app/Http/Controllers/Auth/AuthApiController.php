@@ -7,12 +7,33 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\JWTAuth as JWTAuthJWTAuth;
 
 class AuthApiController extends ApiController
 {
     /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @OA\Post(
+     *     path="/auth/login",
+     *     tags={"auth"},
+     *     operationId="login",
+     *     summary="Iniciar sesion para obtener un token de acceso.",
+     *     @OA\RequestBody(
+     *         description="Credenciales del usuario (username, password)",
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/User")
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Datos invalidos!",
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successful pues :3",
+     *     ),
+     *     security={
+     *         {"bearer": {}}
+     *     }
+     * )
      */
     public function login(Request $request)
     {
@@ -100,7 +121,7 @@ class AuthApiController extends ApiController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires' => auth('api')->factory()->getTTL(),
+            'expires' => JWTAuth::factory()->getTTL(),
         ])->header('Authorization', $token);;
     }
 }
